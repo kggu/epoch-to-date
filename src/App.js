@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
+import DataTable from "./components/DataTable";
 import CSVReader from "react-csv-reader";
 import "./App.css";
 
 const App = () => {
   const [index, setIndex] = useState();
   const [input, setInput] = useState();
+  const [fileInfo, setFileInfo] = useState();
   const [converted, setConverted] = useState();
 
   const handleInputChange = (e) => {
@@ -20,10 +22,13 @@ const App = () => {
   };
 
   useEffect(() => {
-    console.log("INPUT: ");
-    console.log(input);
-    console.log(JSON.stringify(input));
+   // console.log("INPUT: ");
+    //console.log(input);
   }, [input]);
+
+  useEffect(() => {
+    //console.log(fileInfo);
+  }, [fileInfo]);
 
   return (
     <div className="container">
@@ -41,6 +46,7 @@ const App = () => {
             </p>
             <input
               type="text"
+              value="0"
               style={{ width: "2em", border: "2px solid #979797" }}
             ></input>
             <label htmlFor="upload_file" className="file-upload-button">
@@ -50,13 +56,9 @@ const App = () => {
             </label>
           </div>
 
-          <textarea
-            onChange={handleInputChange}
-            type="text"
-            className="input-field"
-            value={input}
-            readOnly
-          ></textarea>
+          <div className="input-field">
+            <DataTable data={input} />
+          </div>
         </div>
         <div className="input-control">
           <div className="input-header">
@@ -67,12 +69,7 @@ const App = () => {
               <code>copy to clipboard</code>
             </button>
           </div>
-          <textarea
-            type="text"
-            className="input-field"
-            value={converted}
-            readOnly
-          ></textarea>
+          <div className="input-field"></div>
         </div>
       </div>
       <button
@@ -85,8 +82,12 @@ const App = () => {
       <CSVReader
         inputId="upload_file"
         inputStyle={{ display: "none" }}
-        onFileLoaded={(data, fileInfo) => setInput(data)}
+        onFileLoaded={(data, fileInfo) => {
+          setInput(data);
+          setFileInfo(fileInfo);
+        }}
       />
+      <code>{JSON.stringify(fileInfo)}</code>
     </div>
   );
 };
