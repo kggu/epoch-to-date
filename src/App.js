@@ -12,10 +12,10 @@ const App = () => {
   const convertInput = () => {
     if (input) {
       console.log("index: " + index);
-      let convert = input;
+      let convert = Object.create(input);
 
       for (let i = 0; i < convert.length; i++) {
-        convert[i][0] = "2020-02-20";
+        convert[i][0] = new Date(convert[i][0] * 1000).toISOString();
       }
 
       setOutput(convert);
