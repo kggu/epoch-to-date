@@ -4,31 +4,27 @@ import CSVReader from "react-csv-reader";
 import "./App.css";
 
 const App = () => {
-  const [index, setIndex] = useState();
+  const [index, setIndex] = useState(0);
   const [input, setInput] = useState();
+  const [output, setOutput] = useState();
   const [fileInfo, setFileInfo] = useState();
-  const [converted, setConverted] = useState();
-
-  const handleInputChange = (e) => {
-    setInput(e.target.value);
-  };
 
   const convertInput = () => {
-    setConverted(input);
+    if (input) {
+      console.log("index: " + index);
+      let convert = input;
+
+      for (let i = 0; i < convert.length; i++) {
+        convert[i][0] = "2020-02-20";
+      }
+
+      setOutput(convert);
+    }
   };
 
   const copyToClipboard = () => {
     console.log("Copy to clipboard");
   };
-
-  useEffect(() => {
-   // console.log("INPUT: ");
-    //console.log(input);
-  }, [input]);
-
-  useEffect(() => {
-    //console.log(fileInfo);
-  }, [fileInfo]);
 
   return (
     <div className="container">
@@ -46,7 +42,8 @@ const App = () => {
             </p>
             <input
               type="text"
-              value="0"
+              value={index}
+              onChange={(e) => setIndex(e.target.value)}
               style={{ width: "2em", border: "2px solid #979797" }}
             ></input>
             <label htmlFor="upload_file" className="file-upload-button">
@@ -69,7 +66,9 @@ const App = () => {
               <code>copy to clipboard</code>
             </button>
           </div>
-          <div className="input-field"></div>
+          <div className="input-field">
+            <DataTable data={output} />
+          </div>
         </div>
       </div>
       <button
