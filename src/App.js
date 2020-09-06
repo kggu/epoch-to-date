@@ -11,13 +11,18 @@ const App = () => {
     setInput(e.target.value);
   };
 
-  const handleFileChange = (e) => {
-    console.log(e.target.files[0]);
+  const convertInput = () => {
+    setConverted(input);
+  };
+
+  const copyToClipboard = () => {
+    console.log("Copy to clipboard");
   };
 
   useEffect(() => {
     console.log("INPUT: ");
     console.log(input);
+    console.log(JSON.stringify(input));
   }, [input]);
 
   return (
@@ -34,37 +39,54 @@ const App = () => {
             <p>
               <code>index:</code>
             </p>
-            <input type="text" style={{ width: "2em" }}></input>
-            <button className="input-header-button">
-              <code>select from file</code>
-            </button>
+            <input
+              type="text"
+              style={{ width: "2em", border: "2px solid #979797" }}
+            ></input>
+            <label htmlFor="upload_file" className="file-upload-button">
+              <span>
+                <code>select from file</code>
+              </span>
+            </label>
           </div>
 
           <textarea
             onChange={handleInputChange}
             type="text"
             className="input-field"
+            value={input}
             readOnly
-          >
-            {input}
-          </textarea>
+          ></textarea>
         </div>
         <div className="input-control">
           <div className="input-header">
             <p>
               <code>converted |</code>
             </p>
-            <button className="input-header-button">
+            <button onClick={copyToClipboard} className="file-upload-button">
               <code>copy to clipboard</code>
             </button>
           </div>
-          <textarea type="text" className="input-field"></textarea>
+          <textarea
+            type="text"
+            className="input-field"
+            value={converted}
+            readOnly
+          ></textarea>
         </div>
       </div>
-      <button disabled={!input} className="convert-button">
+      <button
+        disabled={!input}
+        onClick={convertInput}
+        className="convert-button"
+      >
         <code>convert</code>
       </button>
-      <CSVReader onFileLoaded={(data, fileInfo) => setInput(data)} />
+      <CSVReader
+        inputId="upload_file"
+        inputStyle={{ display: "none" }}
+        onFileLoaded={(data, fileInfo) => setInput(data)}
+      />
     </div>
   );
 };
