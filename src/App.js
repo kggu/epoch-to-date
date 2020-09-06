@@ -15,7 +15,7 @@ const App = () => {
       let convert = Object.create(input);
 
       for (let i = 0; i < convert.length; i++) {
-        convert[i][0] = new Date(convert[i][0] * 1000).toISOString();
+        convert[i][0] = new Date(convert[i][0] * 1000).toLocaleString();
       }
 
       setOutput(convert);
@@ -44,7 +44,7 @@ const App = () => {
               type="text"
               value={index}
               onChange={(e) => setIndex(e.target.value)}
-              style={{ width: "2em", border: "2px solid #979797" }}
+              className="index-input"
             ></input>
             <label htmlFor="upload_file" className="file-upload-button">
               <span>

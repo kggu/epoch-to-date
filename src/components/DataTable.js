@@ -3,26 +3,30 @@ import "./DataTable.css";
 
 const DataTable = (props) => {
   const data = props?.data;
-  
+
   return (
     <div className="root">
       <table className="table-root">
-        <tr>
-          {data && //Map table headers: 0, 1, 2 etc
-            Object.keys(data[0]).map((value, index) => {
-              return <th>{index}</th>;
+        <thead>
+          <tr>
+            {data && //Map table headers: 0, 1, 2 etc
+              Object.keys(data[0]).map((value, index) => {
+                return <th>{index}</th>;
+              })}
+          </tr>
+        </thead>
+        <tbody>
+          {data &&
+            data.map((row, index) => {
+              return (
+                <tr>
+                  {row.map((value, index) => {
+                    return <td>{value}</td>;
+                  })}
+                </tr>
+              );
             })}
-        </tr>
-        {data &&
-          data.map((row, index) => {
-            return (
-              <tr>
-                {row.map((value, index) => {
-                  return <td>{value}</td>;
-                })}
-              </tr>
-            );
-          })}
+        </tbody>
       </table>
     </div>
   );
