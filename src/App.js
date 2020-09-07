@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import DataTable from "./components/DataTable";
 import CSVReader from "react-csv-reader";
 import "./App.css";
@@ -11,11 +11,13 @@ const App = () => {
 
   const convertInput = () => {
     if (input) {
-      console.log("index: " + index);
-      let convert = Object.create(input);
+      // Copy instead of reference, so the original input doesn't get converted...
+      let convert = JSON.parse(JSON.stringify(input));
 
       for (let i = 0; i < convert.length; i++) {
-        convert[i][0] = new Date(convert[i][0] * 1000).toLocaleString();
+        convert[i][0] = new Date(convert[i][0] * 1000)
+          .toUTCString()
+          .replace(",", "");
       }
 
       setOutput(convert);
@@ -48,13 +50,15 @@ const App = () => {
             ></input>
             <label htmlFor="upload_file" className="file-upload-button">
               <span>
-                <code>select from file</code>
+                <code>select file</code>
               </span>
             </label>
           </div>
 
           <div className="input-field">
-            <DataTable data={input} />
+            <DataTable
+              data={input}
+            />
           </div>
         </div>
         <div className="input-control">
@@ -86,7 +90,7 @@ const App = () => {
           setFileInfo(fileInfo);
         }}
       />
-      <code>{JSON.stringify(fileInfo)}</code>
+      <code>{fileInfo?.name}</code>
     </div>
   );
 };
