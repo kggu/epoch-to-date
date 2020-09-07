@@ -21,7 +21,10 @@ const DataTable = (props) => {
               return (
                 <tr>
                   {row.map((value, index) => {
-                    return <td>{value}</td>;
+                    if (index + 1 === row.length) {
+                      return <td>{value}</td>;
+                    }
+                    return <td>{value},</td>;
                   })}
                 </tr>
               );

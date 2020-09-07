@@ -4,7 +4,6 @@ import CSVReader from "react-csv-reader";
 import "./App.css";
 
 const App = () => {
-  const [index, setIndex] = useState(0);
   const [input, setInput] = useState();
   const [output, setOutput] = useState();
   const [fileInfo, setFileInfo] = useState();
@@ -24,10 +23,6 @@ const App = () => {
     }
   };
 
-  const copyToClipboard = () => {
-    console.log("Copy to clipboard");
-  };
-
   return (
     <div className="container">
       <p>
@@ -40,25 +35,16 @@ const App = () => {
               <code>original |</code>
             </p>
             <p>
-              <code>index:</code>
+              <code>{fileInfo?.name}</code>
             </p>
-            <input
-              type="text"
-              value={index}
-              onChange={(e) => setIndex(e.target.value)}
-              className="index-input"
-            ></input>
-            <label htmlFor="upload_file" className="file-upload-button">
+            <label htmlFor="upload_file" className="control-button">
               <span>
                 <code>select file</code>
               </span>
             </label>
           </div>
-
           <div className="input-field">
-            <DataTable
-              data={input}
-            />
+            <DataTable data={input} />
           </div>
         </div>
         <div className="input-control">
@@ -66,9 +52,9 @@ const App = () => {
             <p>
               <code>converted |</code>
             </p>
-            <button onClick={copyToClipboard} className="file-upload-button">
-              <code>copy to clipboard</code>
-            </button>
+            <p className="control-button">
+              <code>created by miikka k.</code>
+            </p>
           </div>
           <div className="input-field">
             <DataTable data={output} />
@@ -82,6 +68,7 @@ const App = () => {
       >
         <code>convert</code>
       </button>
+
       <CSVReader
         inputId="upload_file"
         inputStyle={{ display: "none" }}
@@ -90,7 +77,6 @@ const App = () => {
           setFileInfo(fileInfo);
         }}
       />
-      <code>{fileInfo?.name}</code>
     </div>
   );
 };
